@@ -1,5 +1,8 @@
+const { WebhookClient } = require("discord.js");
+const isPortReachable = require("is-port-reachable");
 const { createLogger, format, transports, level } = require("winston");
 const { consoleFormat } = require("winston-console-format");
+var pjson = require("./package.json");
 const logger = createLogger({
 	level: "silly",
 	format: format.combine(
@@ -45,6 +48,51 @@ exports.consoleinfo = async function (info) {
 
 exports.consolesilly = async function (silly) {
 	logger.silly(silly);
+};
+
+exports.discordsendwebhook = async function (wb, embed) {
+	let p3 = new Promise(async (resolve, reject) => {
+		if (!wb || !embed)
+			return reject("A Webhook url for discord and embed is required!");
+
+		try {
+			if (!webhook)
+				return reject(
+					"Webhook error please make sure the webhook is a discord webhook"
+				);
+
+			webhook.send({ embeds: [embed] });
+
+			resolve("Completed!");
+		} catch (err) {
+			return reject(err);
+		}
+	});
+	return p3;
+};
+
+exports.versioninfo = async function () {
+	let p3 = new Promise(async (resolve, reject) => {
+		let data = {
+			discordjs: pjson.dependencies["discord.js"],
+			node: process.versions.node,
+		};
+		resolve(data);
+	});
+	return p3;
+};
+
+exports.checkipport = async function (ip, port) {
+	let p3 = new Promise(async (resolve, reject) => {
+		if (!ip || !port) return reject("You must provide a ip and a port");
+
+		let is = await isPortReachable(port, { host: ip });
+
+		let data = is;
+
+		resolve(data);
+	});
+	return p3;
 };
 
 exports.javascriptmath = async function (num1, num2) {
