@@ -1,24 +1,25 @@
 {
-  "name": "discord-helper.js",
-  "version": "1.0.0",
-  "description": "a helper to help you do simple tasks with discord.js",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/GamearooCodes/discord-helper.js.git"
-  },
-  "author": "GamearooCodes",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/GamearooCodes/discord-helper.js/issues"
-  },
-  "homepage": "https://github.com/GamearooCodes/discord-helper.js#readme",
-  "dependencies": {
-    "discord.js": "^13.6.0",
-    "winston": "^3.6.0",
-    "winston-console-format": "^1.0.8"
-  }
+	"name": "discord-helper.js",
+	"version": "1.0.0",
+	"description": "a helper to help you do simple tasks with discord.js",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/GamearooCodes/discord-helper.js.git"
+	},
+	"author": "GamearooCodes",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/GamearooCodes/discord-helper.js/issues"
+	},
+	"homepage": "https://github.com/GamearooCodes/discord-helper.js#readme",
+	"dependencies": {
+		"discord.js": "^13.6.0",
+		"is-port-reachable": "^3.0.0",
+		"winston": "^3.6.0",
+		"winston-console-format": "^1.0.8"
+	}
 }
