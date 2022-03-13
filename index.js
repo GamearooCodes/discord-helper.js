@@ -1,4 +1,4 @@
-const { WebhookClient } = require("discord.js");
+const { WebhookClient, MessageEmbed } = require("discord.js");
 const isPortReachable = require("is-port-reachable");
 const { createLogger, format, transports, level } = require("winston");
 const { consoleFormat } = require("winston-console-format");
@@ -34,6 +34,25 @@ const logger = createLogger({
 	],
 });
 
+exports.clientping = async function (client) {
+	let p3 = new Promise(async (resolve, reject) => {
+		if (!client) return reject(`Client is required`);
+		let embed = new MessageEmbed();
+
+		embed.setDescription(`${client.ws.ping || 0}ms`);
+
+		text = `${client.ws.ping || 0}ms`;
+
+		let data = {
+			embed,
+			text,
+		};
+
+		resolve(data);
+	});
+	return p3;
+};
+
 exports.consoleerror = async function (err) {
 	logger.error(err);
 };
@@ -48,6 +67,49 @@ exports.consoleinfo = async function (info) {
 
 exports.consolesilly = async function (silly) {
 	logger.silly(silly);
+};
+
+exports.pages = async function (array, itemsPerPage, page = 1) {
+	let p3 = new Promise(async (resolve, reject) => {
+		let pagedata;
+		const maxPages = Math.ceil(array.length / itemsPerPage);
+		if (page < 1 || page > maxPages) return reject("err: page error");
+		let data = {
+			array: array.slice((page - 1) * itemsPerPage, page * itemsPerPage),
+			page: `${page} / ${maxPages}`,
+		};
+
+		resolve(data);
+	});
+	return p3;
+};
+
+exports.discordchannelsend = async function (client, channel, content, embed) {
+	let p3 = new Promise(async (resolve, reject) => {
+		let channelsend = client.channels.cache.get(channel.id || channel) || null;
+
+		if (!channelsend) return reject("Error: Chanel not defined!");
+
+		if (content !== "" && !content)
+			return reject(
+				'You must provide content as "" or with text ``Note use "" only for embeds if no embeds the content is needed!'
+			);
+
+		if (content !== "" && !embed)
+			return reject('a embed is required for "" content');
+
+		if (embed && content) {
+			channelsend.send({ content, embeds: [embed] });
+			resolve("Completed");
+		} else if (embed) {
+			channelsend.send({ embeds: [embed] });
+			resolve("Completed");
+		} else if (content) {
+			channelsend.send({ content });
+			resolve("Completed");
+		}
+	});
+	return p3;
 };
 
 exports.discordsendwebhook = async function (wb, embed) {
