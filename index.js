@@ -50,6 +50,33 @@ exports.consolesilly = async function (silly) {
 	logger.silly(silly);
 };
 
+exports.discordchannelsend = async function (client, channel, content, embed) {
+	let p3 = new Promise(async (resolve, reject) => {
+		let channelsend = client.channels.cache.get(channel.id || channel) || null;
+
+		if (!channelsend) reject("Error: Chanel not defined!");
+
+		if (!content)
+			reject(
+				'You must provide content as "" or with text ``Note use "" only for embeds if no embeds the content is needed!'
+			);
+
+		if (content === "" || !embed) reject('a embed is required for "" content');
+
+		if (embed && content) {
+			channelsend.send({ content, embeds: [embed] });
+			resolve("Completed");
+		} else if (embed) {
+			channelsend.send({ embeds: [embed] });
+			resolve("Completed");
+		} else if (content) {
+			channelsend.send({ content });
+			resolve("Completed");
+		}
+	});
+	return p3;
+};
+
 exports.discordsendwebhook = async function (wb, embed) {
 	let p3 = new Promise(async (resolve, reject) => {
 		if (!wb || !embed)

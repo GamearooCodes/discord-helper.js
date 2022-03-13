@@ -90,6 +90,15 @@ helper
 	.checkipport(ip, port)
 	.then((data) => console.log(`Isup: ${data}`))
 	.catch((err) => console.log(err));
+//(client, channel, content, embed)  embed is optional when content has text also content can be "" when theres a embed
+helper
+	.discordchannelsend(client, message.channel, "Hi", embed)
+	.then((data) => {
+		console.log(data);
+	})
+	.catch((err) => {
+		console.log(err);
+	});
 
 helper
 	.javascriptmath(num1, num2)
