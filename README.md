@@ -77,22 +77,27 @@ helper.consoleinfo("test info");
 helper.consolewarn("test warn");
 helper.consolesilly("test silly");
 
+// end of console examples
+
 //webhook send example
 helper
 	.discordsendwebhook(webhookurl, embed)
 	.then((data) => helper.consoleinfo(data))
 	.catch((err) => helper.consoleerror(err));
-//version info
+//end of webhook send example
+//version info example
 helper.versioninfo().then((data) => {
 	let { discordjs, node } = data;
 	console.log(discordjs);
 	console.log(node);
 });
+//end of version info example
 //check a ip and port example
 helper
 	.checkipport(ip, port)
 	.then((data) => console.log(`Isup: ${data}`))
 	.catch((err) => console.log(err));
+//end of check a ip and port example
 
 //channel send example
 
@@ -104,6 +109,7 @@ helper
 	.catch((err) => {
 		console.log(err);
 	});
+//end of channel send example
 //math example
 helper
 	.javascriptmath(num1, num2)
@@ -135,7 +141,7 @@ helper
 		console.log(exponentround); // rounded
 	})
 	.catch((err) => consoleerror(err));
-
+//end of math example
 //pages example
 let array = ["Hi", "hi2", "h3", "h4"];
 let maxitemperpage = 2;
@@ -156,6 +162,18 @@ embed.description = `${newarray.map((m) => m).join(", ")} \n\n ${pagen}`;
 discordchannelsend(client, message.channel, "", embed).catch((err) =>
 	console.log(err)
 );
+
+//end of pages example
+//client ping example
+clientping(client).then((data) => {
+	embed = data.embed;
+	discordchannelsend(client, message.channel.id, data.text, embed).catch(
+		(err) => {
+			consoleerror(err);
+		}
+	);
+});
+//end of client ping example
 ```
 
 ## Support

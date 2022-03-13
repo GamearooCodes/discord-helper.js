@@ -1,4 +1,4 @@
-const { WebhookClient } = require("discord.js");
+const { WebhookClient, MessageEmbed } = require("discord.js");
 const isPortReachable = require("is-port-reachable");
 const { createLogger, format, transports, level } = require("winston");
 const { consoleFormat } = require("winston-console-format");
@@ -33,6 +33,25 @@ const logger = createLogger({
 		}),
 	],
 });
+
+exports.clientping = async function (client) {
+	let p3 = new Promise(async (resolve, reject) => {
+		if (!client) return reject(`Client is required`);
+		let embed = new MessageEmbed();
+
+		embed.setDescription(`${client.ws.ping || 0}ms`);
+
+		text = `${client.ws.ping || 0}ms`;
+
+		let data = {
+			embed,
+			text,
+		};
+
+		resolve(data);
+	});
+	return p3;
+};
 
 exports.consoleerror = async function (err) {
 	logger.error(err);
