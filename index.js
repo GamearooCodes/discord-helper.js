@@ -50,18 +50,34 @@ exports.consolesilly = async function (silly) {
 	logger.silly(silly);
 };
 
+exports.pages = async function (array, itemsPerPage, page = 1) {
+	let p3 = new Promise(async (resolve, reject) => {
+		let pagedata;
+		const maxPages = Math.ceil(array.length / itemsPerPage);
+		if (page < 1 || page > maxPages) return reject("err: page error");
+		let data = {
+			array: array.slice((page - 1) * itemsPerPage, page * itemsPerPage),
+			page: `${page} / ${maxPages}`,
+		};
+
+		resolve(data);
+	});
+	return p3;
+};
+
 exports.discordchannelsend = async function (client, channel, content, embed) {
 	let p3 = new Promise(async (resolve, reject) => {
 		let channelsend = client.channels.cache.get(channel.id || channel) || null;
 
-		if (!channelsend) reject("Error: Chanel not defined!");
+		if (!channelsend) return reject("Error: Chanel not defined!");
 
-		if (!content)
-			reject(
+		if (content !== "" && !content)
+			return reject(
 				'You must provide content as "" or with text ``Note use "" only for embeds if no embeds the content is needed!'
 			);
 
-		if (content === "" || !embed) reject('a embed is required for "" content');
+		if (content !== "" && !embed)
+			return reject('a embed is required for "" content');
 
 		if (embed && content) {
 			channelsend.send({ content, embeds: [embed] });

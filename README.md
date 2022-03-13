@@ -69,37 +69,42 @@ let embed = {
 
 let ip = "ip";
 let port = "port";
+
+// console examples
 helper.consoleerror("test error");
 
 helper.consoleinfo("test info");
 helper.consolewarn("test warn");
 helper.consolesilly("test silly");
 
+//webhook send example
 helper
 	.discordsendwebhook(webhookurl, embed)
 	.then((data) => helper.consoleinfo(data))
 	.catch((err) => helper.consoleerror(err));
-
+//version info
 helper.versioninfo().then((data) => {
 	let { discordjs, node } = data;
 	console.log(discordjs);
 	console.log(node);
 });
-
+//check a ip and port example
 helper
 	.checkipport(ip, port)
 	.then((data) => console.log(`Isup: ${data}`))
 	.catch((err) => console.log(err));
-//(client, channel, content, embed)  embed is optional when content has text also content can be "" when theres a embed
+
+//channel send example
+
 helper
-	.discordchannelsend(client, message.channel, "Hi", embed)
+	.discordchannelsend(client, message.channel, "Hi", embed) //(client, channel, content, embed)  embed is optional when content has text also content can be "" when theres a embed
 	.then((data) => {
 		console.log(data);
 	})
 	.catch((err) => {
 		console.log(err);
 	});
-
+//math example
 helper
 	.javascriptmath(num1, num2)
 	.then((data) => {
@@ -130,6 +135,27 @@ helper
 		console.log(exponentround); // rounded
 	})
 	.catch((err) => consoleerror(err));
+
+//pages example
+let array = ["Hi", "hi2", "h3", "h4"];
+let maxitemperpage = 2;
+let page = args[1] || 1;
+
+let newarray;
+let pagen;
+
+await pages(array, maxitemperpage, page)
+	.then((data) => {
+		newarray = data.array;
+		pagen = data.page;
+	})
+	.catch((err) => console.log(err));
+
+embed.description = `${newarray.map((m) => m).join(", ")} \n\n ${pagen}`;
+
+discordchannelsend(client, message.channel, "", embed).catch((err) =>
+	console.log(err)
+);
 ```
 
 ## Support
