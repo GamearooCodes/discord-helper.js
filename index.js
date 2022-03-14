@@ -118,6 +118,7 @@ exports.discordsendwebhook = async function (wb, embed) {
 			return reject("A Webhook url for discord and embed is required!");
 
 		try {
+			const webhook = new WebhookClient({ url: wb });
 			if (!webhook)
 				return reject(
 					"Webhook error please make sure the webhook is a discord webhook"
