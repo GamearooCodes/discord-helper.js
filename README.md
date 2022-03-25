@@ -1,6 +1,17 @@
-# discord-helper.js
+<div align="center">
+  <br />
+  <p>
+    <a href="https://discord.js.org"><img src="https://gamearoo.top/ram/d-h.js.png" width="546" alt="ram-api.js" /></a>
+  </p>
+  <br />
+  <p>
+    <a href="https://discord.com/invite/a3vBXUJadY"><img src="https://img.shields.io/discord/605900262581993472?color=5865F2&logo=discord&logoColor=white" alt="Discord server" /></a>
+    <a href="https://www.npmjs.com/package/discord-helper.js"><img src="https://img.shields.io/npm/v/discord-helper.js.svg?maxAge=3600" alt="npm version" /></a>
+    <a href="https://www.npmjs.com/package/discord-helper.js"><img src="https://img.shields.io/npm/dt/discord-helper.js.svg?maxAge=3600" alt="npm downloads" /></a>
+    <a href="https://github.com/Gamearoos-development/discord-helper.js/actions"><img src="https://github.com/Gamearoos-development/discord-helper.js/actions/workflows/text.yml/badge.svg" alt="Tests status" /></a>
+  </p>
+</div>
 
-a helper to help you do simple tasks with discord.js
 
 ## About this package
 
