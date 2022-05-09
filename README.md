@@ -81,110 +81,70 @@ let embed = {
 let ip = "ip";
 let port = "port";
 
+let helperclient = new helper.Client("Bots Name", Client);
+let helperutils = new helper.Utils("Name for logs");
+
 // console examples
-helper.consoleerror("test error");
-
-helper.consoleinfo("test info");
-helper.consolewarn("test warn");
-helper.consolesilly("test silly");
-
+helperclient.executeconsole(false, false, true, "online"); // info
+helperclient.executeconsole(false, true, false, "online"); // error
+helperclient.executeconsole(true, false, false, "online"); // warn
 // end of console examples
 
-//webhook send example
-helper
-  .discordsendwebhook(webhookurl, embed)
-  .then((data) => helper.consoleinfo(data))
-  .catch((err) => helper.consoleerror(err));
-//end of webhook send example
-//version info example
-helper.versioninfo().then((data) => {
+helperclient.ping().then((data) => {
+  let { embed, text } = data;
+
+  //code here
+});
+
+let arrary = ["1", "2", "3", "4"];
+
+helperutils.pages(arrary, 2, 2).then((data) => {
+  console.log(data.array);
+  console.log(data.page);
+});
+
+helperclient.channelsend(message.channel, "test", embed);
+helperclient.channelsend(message.channel, "", embed);
+helperclient.channelsend(message.channel, "test");
+
+helperutils.discordsendwebhook(webhookurl, embed);
+
+helperutils.versioninfo().then((data) => {
   let { discordjs, node } = data;
-  console.log(discordjs);
-  console.log(node);
+  //code here
 });
-//end of version info example
-//check a ip and port example
-helper
-  .checkipport(ip, port)
-  .then((data) => console.log(`Isup: ${data}`))
-  .catch((err) => console.log(err));
-//end of check a ip and port example
 
-//channel send example
-
-helper
-  .discordchannelsend(client, message.channel, "Hi", embed) //(client, channel, content, embed)  embed is optional when content has text also content can be "" when theres a embed
-  .then((data) => {
-    console.log(data);
-  })
-  .catch((err) => {
-    console.log(err);
-  });
-//end of channel send example
-//math example
-helper
-  .javascriptmath(num1, num2)
-  .then((data) => {
-    let {
-      add,
-      addround,
-      subtract,
-      subtractround,
-      multiplication,
-      multiround,
-      division,
-      divisionround,
-      remainder,
-      exponent,
-      exponentround,
-    } = data;
-
-    console.log(add); //not rounded
-    console.log(addround); // rounded
-    console.log(subtract); // not rounded
-    console.log(subtractround); // rounded
-    console.log(multiplication); // not rounded
-    console.log(multiround); // rounded
-    console.log(division); // not rounded
-    console.log(divisionround); // rounded
-    console.log(remainder);
-    console.log(exponent); //not rounded
-    console.log(exponentround); // rounded
-  })
-  .catch((err) => consoleerror(err));
-//end of math example
-//pages example
-let array = ["Hi", "hi2", "h3", "h4"];
-let maxitemperpage = 2;
-let page = args[1] || 1;
-
-let newarray;
-let pagen;
-
-await pages(array, maxitemperpage, page)
-  .then((data) => {
-    newarray = data.array;
-    pagen = data.page;
-  })
-  .catch((err) => console.log(err));
-
-embed.description = `${newarray.map((m) => m).join(", ")} \n\n ${pagen}`;
-
-discordchannelsend(client, message.channel, "", embed).catch((err) =>
-  console.log(err)
-);
-
-//end of pages example
-//client ping example
-clientping(client).then((data) => {
-  embed = data.embed;
-  discordchannelsend(client, message.channel.id, data.text, embed).catch(
-    (err) => {
-      consoleerror(err);
-    }
-  );
+helperutils.checkipport(ip, port).then((data) => {
+  console.log(data); // returns true or false
 });
-//end of client ping example
+
+helperutils.math(1, 5).then((data) => {
+  let {
+    add,
+    addround,
+    subtract,
+    subtractround,
+    multiplication,
+    multiround,
+    division,
+    divisionround,
+    remainder,
+    exponent,
+    exponentround,
+  } = data;
+
+  console.log(add); //not rounded
+  console.log(addround); // rounded
+  console.log(subtract); // not rounded
+  console.log(subtractround); // rounded
+  console.log(multiplication); // not rounded
+  console.log(multiround); // rounded
+  console.log(division); // not rounded
+  console.log(divisionround); // rounded
+  console.log(remainder);
+  console.log(exponent); //not rounded
+  console.log(exponentround); // rounded
+});
 ```
 
 ## Support

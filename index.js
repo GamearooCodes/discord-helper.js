@@ -60,6 +60,32 @@ class Client {
 		if(info) this.logs.info(text);
 
 	}
+	/**
+	 * 
+	 * @param {discord.GuildChannel} channel 
+	 * @param {String} context 
+	 * @param {discord.MessageEmbed} embed 
+	 */
+	channelsend(channel, context, embed) {
+		let channelsend = this.client.channels.cache.get(channel.id || channel) || null;
+
+		if(!channelsend) return this.logs.error(`Channel ${channel || "NULL"} is not found in any  guild within this provided client!`);
+
+		if(context !== "" && !context) return this.logs.error(`You must provide content as "" or with text ``Note use "" only for embeds if no embeds the content is needed!`);
+
+		if (context === "" && !embed)
+			return this.logs.error('a embed is required for "" content');
+
+			if (embed && context) {
+				channelsend.send({ content: context, embeds: [embed] });
+			} else if (embed) {
+				channelsend.send({ embeds: [embed] });
+			} else if (context) {
+				channelsend.send({ content: context });
+			}
+
+
+	}
 
 }
 
@@ -95,6 +121,89 @@ class Utils {
 			};
 	
 			resolve(data);
+		});
+		return p3;
+	}
+	/**
+	 * 
+	 * @param {discord.Webhook} webhookurl 
+	 * @param {discord.MessageEmbed} embed 
+	 * @returns 
+	 */
+	discordsendwebhook(webhookurl, embed) {
+		if (!webhookurl || !embed)
+			return this.logs.error("A Webhook url for discord and embed is required!");
+
+		try {
+			const webhook = new WebhookClient({ url: webhookurl });
+			if (!webhook)
+				return this.logs.error(
+					"Webhook error please make sure the webhook is a discord webhook"
+				);
+
+			webhook.send({ embeds: [embed] });
+
+		
+		} catch (err) {
+			return this.logs.error(err);
+		}
+	}
+	/**
+	 * 
+	 * @returns 
+	 */
+	versioninfo() {
+		let p3 = new Promise(async (resolve, reject) => {
+			let data = {
+				discordjs: pjson.dependencies["discord.js"],
+				node: process.versions.node,
+			};
+			resolve(data);
+		});
+		return p3;
+	}
+	/**
+	 * 
+	 * @param {String} ip 
+	 * @param {Number} port 
+	 * @returns true or false
+	 */
+	checkipport(ip, port){
+		let p3 = new Promise(async (resolve, reject) => {
+			if (!ip || !port) return reject("You must provide a ip and a port");
+	
+			let is = await isPortReachable(port, { host: ip });
+	
+			let data = is;
+	
+			resolve(data);
+		});
+		return p3;
+	}
+	/**
+	 * 
+	 * @param {Number} num1 
+	 * @param {Number} num2 
+	 * @returns data
+	 */
+	math(num1, num2) {
+		let p3 = new Promise(async (resolve, reject) => {
+			if (!num1 || !num2) return reject("You need to provide numbers");
+			let data = {
+				add: num1 + num2,
+				addround: Math.round(num1 + num2),
+				subtract: num1 - num2,
+				subtractround: Math.round(num1 - num2),
+				multiplication: num1 * num2,
+				multiround: Math.round(num1 * num2),
+				division: num1 / num2,
+				divisionround: Math.round(num1 / num2),
+				remainder: num1 % num2,
+				exponent: num1 ** num2,
+				exponentround: Math.round(num1 ** num2),
+			};
+	
+			return resolve(data);
 		});
 		return p3;
 	}
