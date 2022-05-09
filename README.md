@@ -152,7 +152,3 @@ helperutils.math(1, 5).then((data) => {
 email : support@gamearoodev.com
 
 discord: https://discord.gamearoodev.com
-
-## Sugestion
-
-discord: https://discord.gamearoodev.com => discord-helper.js => suggestions
