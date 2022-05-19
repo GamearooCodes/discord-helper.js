@@ -1,6 +1,6 @@
 {
 	"name": "discord-helper.js",
-	"version": "1.1.2",
+	"version": "2.0.0",
 	"description": "a helper to help you do simple tasks with discord.js",
 	"main": "index.js",
 	"scripts": {
@@ -19,6 +19,7 @@
 	"dependencies": {
 		"discord.js": "^13.6.0",
 		"is-port-reachable": "^3.0.0",
+		"simply-logger": "^1.4.38",
 		"winston": "^3.6.0",
 		"winston-console-format": "^1.0.8"
 	}
