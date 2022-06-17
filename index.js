@@ -47,7 +47,7 @@ class Client {
 	};
 	/**
 	 * Sends a message to a channel
-	 * @param {discord.TextChannel|discord.ThreadChannel} channel The channel to send the message to
+	 * @param {discord.TextChannel|discord.ThreadChannel|discord.Snowflake} channel The channel to send the message to
 	 * @param {String} context The content of the message
 	 * @param {discord.MessageEmbed} embed The embed to send (optionnal)
 	 */
