@@ -1,17 +1,12 @@
-const { WebhookClient, MessageEmbed } = require("discord.js");
 const discord = require("discord.js")
 const isPortReachable = require("is-port-reachable");
 const { Logger } = require("simply-logger");
-const { createLogger, format, transports, level } = require("winston");
-const { consoleFormat } = require("winston-console-format");
-var pjson = require("./package.json");
-
 
 class Client {
 	/**
 	 * 
-	 * @param {String} name 
-	 * @param {discord.Client} client 
+	 * @param {String} name The name of the logger
+	 * @param {discord.Client} client The client to use (must be Discord.JS Client)
 	 */
 	constructor(name, client) {
 		/**
@@ -22,174 +17,144 @@ class Client {
 		 * Client logger
 		 */
 		this.logs = new Logger(name, "America/New_York", 12);
-
-	}
+	};
 	/**
 	 * 
 	 * @returns 
 	 */
 	clientping() {
-		let p3 = new Promise(async (resolve, reject) => {
+		const p3 = new Promise(async (resolve, reject) => {
 			if (!this.client) return reject(`Client is required`);
-			let embed = new MessageEmbed();
+			const embed = new discord.MessageEmbed()
+				.setDescription(`${this.client.ws.ping || 0}ms`);
 	
-			embed.setDescription(`${this.client.ws.ping || 0}ms`);
-	
-			let text = `${this.client.ws.ping || 0}ms`;
-	
-			let data = {
+			const text = `${this.client.ws.ping || 0}ms`;
+			const data = {
 				embed: embed,
 				text: text,
 			};
-	
 			resolve(data);
 		});
 		return p3;
-	}
+	};
 	/**
 	 * 
-	 * @param {Boolean} warn 
-	 * @param {Boolean} error 
-	 * @param {Boolean} info 
+	 * @param {('error'|'warn'|'info')} type
 	 * @param {String} text
 	 */
-	executeconsole(warn, error, info, text) {
-
-		if(warn) this.logs.warn(text);
-		if(error) this.logs.error(text);
-		if(info) this.logs.info(text);
-
-	}
+	executeconsole(type, text) {
+		this.logs[type](text);
+	};
 	/**
-	 * 
-	 * @param {discord.GuildChannel} channel 
-	 * @param {String} context 
-	 * @param {discord.MessageEmbed} embed 
+	 * Sends a message to a channel
+	 * @param {discord.TextChannel|discord.ThreadChannel} channel The channel to send the message to
+	 * @param {String} context The content of the message
+	 * @param {discord.MessageEmbed} embed The embed to send (optionnal)
 	 */
 	channelsend(channel, context, embed) {
-		let channelsend = this.client.channels.cache.get(channel.id || channel) || null;
+		const channelsend = this.client.channels.cache.get(channel.id || channel) || null;
 
 		if(!channelsend) return this.logs.error(`Channel ${channel || "NULL"} is not found in any  guild within this provided client!`);
-
 		if(context !== "" && !context) return this.logs.error(`You must provide content as "" or with text ``Note use "" only for embeds if no embeds the content is needed!`);
-
-		if (context === "" && !embed)
-			return this.logs.error('a embed is required for "" content');
-
-			if (embed && context) {
-				channelsend.send({ content: context, embeds: [embed] });
-			} else if (embed) {
-				channelsend.send({ embeds: [embed] });
-			} else if (context) {
-				channelsend.send({ content: context });
-			}
-
-
-	}
-
-}
+		if (context === "" && !embed) return this.logs.error('a embed is required for "" content');
+		if (embed && context) {
+			channelsend.send({ content: context, embeds: [embed] });
+		} else if (embed) {
+			channelsend.send({ embeds: [embed] });
+		} else if (context) {
+			channelsend.send({ content: context });
+		};
+	};
+};
 
 class Utils {
 	/**
-	 * 
-	 * @param {String} name 
+	 * Util class
+	 * @param {String} name The name of the logger
 	 */
 	constructor(name) {
-	this.logs = new Logger(name, "America/New_York", 12);
-	}
+		this.logs = new Logger(name, "America/New_York", 12);
+	};
 
 	/**
 	 * 
 	 * @param {Array} array 
 	 * @param {Number} itemsPerPage 
 	 * @param {Number} page 
-	 * @returns data
+	 * @returns {data}
 	 */
 	pages(array, itemsPerPage, page = 1) {
-		let p3 = new Promise(async (resolve, reject) => {
-			let pagedata;
+		const p3 = new Promise(async (resolve, reject) => {
 			const maxPages = Math.ceil(array.length / itemsPerPage);
 			if (page < 1 || page > maxPages) return reject("err: page error");
-			let array2 = array.slice((page - 1) * itemsPerPage, page * itemsPerPage)
-
-			var array3 = [];
-
+			const array2 = array.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+			const array3 = [];
 			array2.map(text => array3.push(text));
-			let data = {
+			const data = {
 				array: array3,
 				page: `${page} / ${maxPages}`,
 			};
-	
 			resolve(data);
 		});
 		return p3;
-	}
+	};
 	/**
 	 * 
-	 * @param {discord.Webhook} webhookurl 
-	 * @param {discord.MessageEmbed} embed 
+	 * @param {discord.Webhook} webhookurl The webhook url to send the message to
+	 * @param {discord.MessageEmbed} embed The embed to send
 	 * @returns 
 	 */
 	discordsendwebhook(webhookurl, embed) {
 		if (!webhookurl || !embed)
 			return this.logs.error("A Webhook url for discord and embed is required!");
-
 		try {
-			const webhook = new WebhookClient({ url: webhookurl });
-			if (!webhook)
-				return this.logs.error(
-					"Webhook error please make sure the webhook is a discord webhook"
+			const webhook = new discord.WebhookClient({ url: webhookurl });
+			if (!webhook) return this.logs.error(
+					"WebhookError: please make sure the webhook url is valid"
 				);
-
 			webhook.send({ embeds: [embed] });
-
-		
 		} catch (err) {
 			return this.logs.error(err);
-		}
-	}
+		};
+	};
 	/**
-	 * 
+	 * Checks versions of Discord.JS and the NodeJS version
 	 * @returns 
 	 */
 	versioninfo() {
-		let p3 = new Promise(async (resolve, reject) => {
-			let data = {
-				discordjs: pjson.dependencies["discord.js"],
+		const p3 = new Promise(async (resolve, reject) => {
+			const data = {
+				discordjs: discord.version,
 				node: process.versions.node,
 			};
 			resolve(data);
 		});
 		return p3;
-	}
+	};
 	/**
-	 * 
-	 * @param {String} ip 
-	 * @param {Number} port 
-	 * @returns true or false
+	 * Checks if a port is reachable
+	 * @param {String} ip The IP address to check
+	 * @param {Number} port The port to check
+	 * @returns {Boolean} True or False
 	 */
 	checkipport(ip, port){
-		let p3 = new Promise(async (resolve, reject) => {
-			if (!ip || !port) return reject("You must provide a ip and a port");
-	
-			let is = await isPortReachable(port, { host: ip });
-	
-			let data = is;
-	
+		const p3 = new Promise(async (resolve, reject) => {
+			if (!ip || !port) return reject("You must provide a IP and a port");
+			const data = await isPortReachable(port, { host: ip });
 			resolve(data);
 		});
 		return p3;
-	}
+	};
 	/**
 	 * 
-	 * @param {Number} num1 
-	 * @param {Number} num2 
+	 * @param {Number} num1 The first number to calculate
+	 * @param {Number} num2 The second number to calculate
 	 * @returns data
 	 */
 	math(num1, num2) {
-		let p3 = new Promise(async (resolve, reject) => {
+		const p3 = new Promise(async (resolve, reject) => {
 			if (!num1 || !num2) return reject("You need to provide numbers");
-			let data = {
+			const data = {
 				add: num1 + num2,
 				addround: Math.round(num1 + num2),
 				subtract: num1 - num2,
@@ -202,15 +167,13 @@ class Utils {
 				exponent: num1 ** num2,
 				exponentround: Math.round(num1 ** num2),
 			};
-	
 			return resolve(data);
 		});
 		return p3;
-	}
-	
-}
+	};
+};
 
 module.exports = {
 	Client,
 	Utils
-}
+};

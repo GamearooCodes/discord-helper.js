@@ -15,7 +15,7 @@
 
 ## About this package
 
-We understand js can be hard especially with discord.js this package has logs and a send webhook to send discord embeds to a discord webhook! IT EVEN HAS MATH!!!!!!
+We understand JavaScript can be hard especially with discord.js. This package has logs and a send webhook to send discord embeds to a discord webhook! IT EVEN HAS MATH!!!!!!
 
 ## Install
 
@@ -85,10 +85,9 @@ let helperclient = new helper.Client("Bots Name", Client);
 let helperutils = new helper.Utils("Name for logs");
 
 // console examples
-helperclient.executeconsole(false, false, true, "online"); // info
-helperclient.executeconsole(false, true, false, "online"); // error
-helperclient.executeconsole(true, false, false, "online"); // warn
-// end of console examples
+helperclient.executeconsole('info', "online"); // info
+helperclient.executeconsole('error', "online"); // error
+helperclient.executeconsole('warn', "online"); // warn
 
 helperclient.ping().then((data) => {
   let { embed, text } = data;
@@ -151,4 +150,4 @@ helperutils.math(1, 5).then((data) => {
 
 email : support@gamearoodev.com
 
-discord: https://discord.gamearoodev.com
+discord: https://discord.gg/k7yBfqyRwg
