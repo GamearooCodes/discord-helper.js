@@ -177,15 +177,18 @@ class Utils {
 	 * 
 	 * @param {*} perm 
 	 * @param {discord.GuildMember} member
+	 * @param {discord.ChannelManager} channel
 	 */
-	async permCheckerAsync(perm, member) {
+	async permCheckerAsync(perm, member, channel) {
 		
 		const p3 = new Promise(async (resolve, reject) => {
-			let hasPerm = true;
+			var hasPerm = true;
 		try {
+		console.log(member.permissions.has(perm))
+		if(!member.permissions.has(perm)) hasPerm = false;
+		if(!member.permissionsIn(channel)) hasPerm = false;
 		
 		
-		if(!await member.permissions.has(perm)) hasPerm = false;
 		} 
 		catch (err) {
 			mylogger.error(err);
