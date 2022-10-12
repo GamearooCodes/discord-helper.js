@@ -2,6 +2,8 @@ const discord = require("discord.js")
 const isPortReachable = require("is-port-reachable");
 const { Logger } = require("simply-logger");
 
+const mylogger = new Logger("discord-helper.js", "America/New_York", 12);
+
 class Client {
 	/**
 	 * 
@@ -171,6 +173,27 @@ class Utils {
 		});
 		return p3;
 	};
+	/**
+	 * 
+	 * @param {*} perm 
+	 * @param {discord.GuildMember} member 
+	 */
+	async permCheckerAsync(perm, member) {
+		let hasPerm = true;
+
+
+		try {
+		if(!await member.permissions.has(perm)) hasPerm = false;
+		} 
+		catch (err) {
+			mylogger.error(err);
+			
+		}
+
+		return hasPerm;
+
+
+	} 
 };
 
 module.exports = {
