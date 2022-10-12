@@ -144,6 +144,8 @@ helperutils.math(1, 5).then((data) => {
 	console.log(exponent); //not rounded
 	console.log(exponentround); // rounded
 });
+
+helperutils.permCheckerAsync(perm, member); //returns true or false
 ```
 
 ## Support
