@@ -145,7 +145,9 @@ helperutils.math(1, 5).then((data) => {
 	console.log(exponentround); // rounded
 });
 
-helperutils.permCheckerAsync(perm, member); //returns true or false
+helperutils.permCheckerAsync(perm, member).then(data) => {
+	console.log(data);
+}; //returns true or false
 ```
 
 ## Support
