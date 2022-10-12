@@ -176,15 +176,15 @@ class Utils {
 	/**
 	 * 
 	 * @param {*} perm 
-	 * @param {discord.UserManager} user 
+	 * @param {String} user 
 	 * @param {discord.Guild} guild
 	 */
-	async permCheckerAsync(perm, user, guild) {
+	async permCheckerAsync(perm, UserID, guild) {
 		
 		const p3 = new Promise(async (resolve, reject) => {
 			let hasPerm = true;
 		try {
-		let member = guild.members.cache.get(user.id);
+		let member = guild.members.cache.get(UserID);
 		
 		if(!await member.permissions.has(perm)) hasPerm = false;
 		} 
