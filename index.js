@@ -180,18 +180,25 @@ class Utils {
 	 * @param {discord.Guild} guild
 	 */
 	async permCheckerAsync(perm, user, guild) {
-		let hasPerm = true;
-
-		let member = guild.members.cache.get(user.id);
+		
+		const p3 = new Promise(async (resolve, reject) => {
+			let hasPerm = true;
 		try {
+		let member = guild.members.cache.get(user.id);
+		
 		if(!await member.permissions.has(perm)) hasPerm = false;
 		} 
 		catch (err) {
 			mylogger.error(err);
+			reject('Error Check Console!')
 			
 		}
 
-		return hasPerm;
+		resolve(hasPerm);
+		})
+
+		return p3
+
 
 
 	} 
