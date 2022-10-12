@@ -144,8 +144,8 @@ helperutils.math(1, 5).then((data) => {
 	console.log(exponent); //not rounded
 	console.log(exponentround); // rounded
 });
-
-helperutils.permCheckerAsync(perm, member).then(data) => {
+// UserID = the id of the user to check perms of
+helperutils.permCheckerAsync(perm, UserID, guild).then(data) => {
 	console.log(data);
 }; //returns true or false
 ```
