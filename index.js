@@ -108,7 +108,7 @@ class Utils {
 	 * @param {discord.MessageEmbed} embed The embed to send (optionnal)
 	 */
 	discordsendwebhookAsync(webhookurl, context, embed) {
-		if (!webhookurl || !embed)
+		if (!webhookurl)
 			return this.logs.error("A Webhook url for discord and embed is required!");
 		try {
 			const webhook = new discord.WebhookClient({ url: webhookurl });
