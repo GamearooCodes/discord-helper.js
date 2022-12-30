@@ -24,7 +24,7 @@ class Client {
 	 * 
 	 * @returns 
 	 */
-	clientping() {
+	clientpingAync() {
 		const p3 = new Promise(async (resolve, reject) => {
 			if (!this.client) return reject(`Client is required`);
 			const embed = new discord.MessageEmbed()
@@ -85,7 +85,7 @@ class Utils {
 	 * @param {Number} page 
 	 * @returns {data}
 	 */
-	pages(array, itemsPerPage, page = 1) {
+	pagesAsync(array, itemsPerPage, page = 1) {
 		const p3 = new Promise(async (resolve, reject) => {
 			const maxPages = Math.ceil(array.length / itemsPerPage);
 			if (page < 1 || page > maxPages) return reject("err: page error");
@@ -100,13 +100,14 @@ class Utils {
 		});
 		return p3;
 	};
+	
 	/**
-	 * 
-	 * @param {discord.Webhook} webhookurl The webhook url to send the message to
-	 * @param {discord.MessageEmbed} embed The embed to send
-	 * @returns 
+	 * Sends a message to a channel
+	 * @param {discord.TextChannel|discord.ThreadChannel|discord.Snowflake} channel The channel to send the message to
+	 * @param {String} context The content of the message
+	 * @param {discord.MessageEmbed} embed The embed to send (optionnal)
 	 */
-	discordsendwebhook(webhookurl, embed) {
+	discordsendwebhookAsync(webhookurl, context, embed) {
 		if (!webhookurl || !embed)
 			return this.logs.error("A Webhook url for discord and embed is required!");
 		try {
@@ -114,7 +115,17 @@ class Utils {
 			if (!webhook) return this.logs.error(
 					"WebhookError: please make sure the webhook url is valid"
 				);
-			webhook.send({ embeds: [embed] });
+			
+				if(context !== "" && !context) return this.logs.error(`You must provide content as "" or with text ``Note use "" only for embeds if no embeds the content is needed!`);
+				if (context === "" && !embed) return this.logs.error('a embed is required for "" content');
+				if (embed && context) {
+					webhook.send({ content: context, embeds: [embed] });
+				} else if (embed) {
+					webhook.send({ embeds: [embed] });
+				} else if (context) {
+					webhook.send({ content: context });
+				};
+
 		} catch (err) {
 			return this.logs.error(err);
 		};
@@ -123,7 +134,7 @@ class Utils {
 	 * Checks versions of Discord.JS and the NodeJS version
 	 * @returns 
 	 */
-	versioninfo() {
+	versioninfoAsync() {
 		const p3 = new Promise(async (resolve, reject) => {
 			const data = {
 				discordjs: discord.version,
@@ -139,7 +150,7 @@ class Utils {
 	 * @param {Number} port The port to check
 	 * @returns {Boolean} True or False
 	 */
-	checkipport(ip, port){
+	checkipportAsync(ip, port){
 		const p3 = new Promise(async (resolve, reject) => {
 			if (!ip || !port) return reject("You must provide a IP and a port");
 			const data = await isPortReachable(port, { host: ip });
