@@ -22,6 +22,31 @@ class Client {
 	};
 	/**
 	 * 
+	 * @param {String} threadName 
+	 * @param {discord.Channel} channel
+	 * @param {discord.Message} message
+	 * @param {discord.Guild} guild
+	 * @returns 
+	 */
+	async threadCreateAsync(threadName, channel, message, guild) {
+		
+
+		if(!guild) return;
+
+		if(!channel) return console.error(`Channel ID provided not found in ${guild.id}`);
+
+		if(channel.type !== discord.ChannelType.GuildText) return console.log("The channel selected is not a text channel");
+
+		if(!message) return console.log("Message Failed to be fetched");
+
+		let thread = await messages.startThread({name: threadName, reason: "Requested by a bot using discord-helper.js"});
+
+		if(!thread) return console.log("Error thread never got made ether perm or other");
+
+		await thread.send("This thread was made using the package discord-helper.js");
+	};
+	/**
+	 * 
 	 * @returns 
 	 */
 	clientpingAync() {
@@ -39,6 +64,8 @@ class Client {
 		});
 		return p3;
 	};
+
+	
 	/**
 	 * 
 	 * @param {('error'|'warn'|'info')} type
