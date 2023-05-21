@@ -114,6 +114,12 @@ helperclient.GlobalcommandRegiter({name: "sub", options: [{name: "command", desc
 helperclient.GlobalcommandRegiter({name: "sub", options: [{name: "command", description: "Hello", type: ApplicationCommandOptionType.Subcommand, options:[{ name: "hello", description: "Hello", type: ApplicationCommandOptionType.String, required: false}] }], description: "sub hello", permission: PermissionFlagsBits.AddReactions});
 helperclient.GlobalcommandRegiter({name: "userapp", options: [], description: "This is a user app", permission: PermissionFlagsBits.Administrator, type: ApplicationCommandType.User});
 
+helperclient.threadCreateAsync("threadName", channel, message, guild).then(data => {
+    console.log(data)
+}).catch(err => {
+    console.log(err)
+})
+
 helperutils.discordsendwebhook(webhookurl, embed);
 
 helperutils.versioninfo().then((data) => {
