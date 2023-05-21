@@ -9,6 +9,9 @@ declare module "discord-helper.js" {
 
 export declare class Client {
     constructor(name: string, client: discord.Client)
+    GlobalcommandRegister: (_options: object) => {
+        _options: object
+    }
     threadCreateAsync: (threadName: string, channel: discord.Channel, message: discord.Message, guild: discord.Guild) => {
         threadName: string;
         channel: discord.ChannelFlags;
