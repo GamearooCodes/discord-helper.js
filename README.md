@@ -84,6 +84,8 @@ let port = "port";
 let helperclient = new helper.Client("Bots Name", Client);
 let helperutils = new helper.Utils("Name for logs");
 
+
+
 // console examples
 helperclient.executeconsole("info", "online"); // info
 helperclient.executeconsole("error", "online"); // error
@@ -105,6 +107,12 @@ helperutils.pages(arrary, 2, 2).then((data) => {
 helperclient.channelsend(message.channel, "test", embed);
 helperclient.channelsend(message.channel, "", embed);
 helperclient.channelsend(message.channel, "test");
+
+helperclient.GlobalcommandRegiter({name: "command", options: [], description: "Hello", permission: PermissionFlagsBits.Administrator })
+helperclient.GlobalcommandRegiter({name: "sub", options: [{name: "command", description: "Hello", type: ApplicationCommandOptionType.Subcommand, options:[] }], description: "sub hello", permission: PermissionFlagsBits.AddReactions});
+helperclient.GlobalcommandRegiter({name: "sub", options: [{name: "command", description: "Hello", type: ApplicationCommandOptionType.Subcommand, options:[{ name: "hello", description: "Hello", type: ApplicationCommandOptionType.String, required: false, choices: [{name: "1", value: "one"}]}] }], description: "sub hello", permission: PermissionFlagsBits.AddReactions});
+helperclient.GlobalcommandRegiter({name: "sub", options: [{name: "command", description: "Hello", type: ApplicationCommandOptionType.Subcommand, options:[{ name: "hello", description: "Hello", type: ApplicationCommandOptionType.String, required: false}] }], description: "sub hello", permission: PermissionFlagsBits.AddReactions});
+helperclient.GlobalcommandRegiter({name: "userapp", options: [], description: "This is a user app", permission: PermissionFlagsBits.Administrator, type: ApplicationCommandType.User});
 
 helperutils.discordsendwebhook(webhookurl, embed);
 

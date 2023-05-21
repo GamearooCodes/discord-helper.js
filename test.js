@@ -1,4 +1,4 @@
-console.log("pass")
+console.log("pass");
 /*
 const e = require('./index');
 const d = require('discord.js');
