@@ -1,6 +1,6 @@
 {
   "name": "discord-helper.js",
-  "version": "5.1.1",
+  "version": "5.1.2",
   "description": "a helper to help you do simple tasks with discord.js",
   "main": "index.js",
   "typings": ".d.ts",
