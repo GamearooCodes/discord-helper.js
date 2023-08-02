@@ -31,6 +31,7 @@ class Client {
     let options = _otions.options;
     let description = _otions.description;
     let permission = _otions.permission;
+    let commands = this.client.application.commands;
     if (_otions.type) {
       commands?.create({
         name,
@@ -41,8 +42,6 @@ class Client {
       });
       mylogger.info(`Registered ${name} to the bots command list`);
     } else {
-      let commands = this.client.application.commands;
-
       commands?.create({
         name,
         description,
