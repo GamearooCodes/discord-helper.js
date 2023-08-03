@@ -25,22 +25,26 @@ class Client {
   /**
    *
    * @param {{name, options, description, permission, type}} _otions
+   * @returns
    */
-  async GlobalcommandRegiter(_otions) {
-    let name = _otions.name;
-    let options = _otions.options;
-    let description = _otions.description;
-    let permission = _otions.permission;
+  async GlobalcommandRegister(_options) {
+    console.log(_options);
+    let name = _options.name;
+    let options = _options.options;
+    let description = _options.description;
+    let permission = _options.permission;
     let commands = this.client.application.commands;
-    if (_otions.type) {
+
+    if (_options.type) {
       commands?.create({
         name,
         description,
         options,
-        type,
+        type: _options.type, // Corrected variable name for 'type'
         default_member_permissions: permission,
       });
-      mylogger.info(`Registered ${name} to the bots command list`);
+
+      return mylogger.info(`Registered ${name} to the bot's command list`);
     } else {
       commands?.create({
         name,
@@ -49,7 +53,7 @@ class Client {
         default_member_permissions: permission,
       });
 
-      mylogger.info(`Registered ${name} to the bots command list`);
+      return mylogger.info(`Registered ${name} to the bot's command list`);
     }
   }
   /**
