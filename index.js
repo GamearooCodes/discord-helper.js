@@ -28,7 +28,7 @@ class Client {
    * @returns
    */
   async GlobalcommandRegister(_options) {
-    console.log(_options);
+    
     let name = _options.name;
     let options = _options.options;
     let description = _options.description;
