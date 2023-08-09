@@ -45,7 +45,7 @@ export declare class Utils {
         page?: number | 1;
     }
 
-    discordWebhookAsync: (webhookurl: string, context: string, embed?: discord.MessageEmbed) => {
+    discordsendwebhookAsync: (webhookurl: string, context: string, embed?: discord.MessageEmbed) => {
         webhookurl: string;
         context: string,
         embed?: discord.MessageEmbed | {};
