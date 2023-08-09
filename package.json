@@ -23,5 +23,8 @@
     "simply-logger": "^1.4.38",
     "winston": "^3.6.0",
     "winston-console-format": "^1.0.8"
+  },
+  "devDependencies": {
+    "jsdoc": "^4.0.2"
   }
 }

@@ -24,11 +24,10 @@ class Client {
 
   /**
    *
-   * @param {{name, options, description, permission, type}} _otions
-   * @returns
+   * @param {{name, options, description, permission, type}} _options The options to use
+  
    */
   async GlobalcommandRegister(_options) {
-    
     let name = _options.name;
     let options = _options.options;
     let description = _options.description;
@@ -58,11 +57,10 @@ class Client {
   }
   /**
    *
-   * @param {String} threadName
-   * @param {discord.Channel} channel
-   * @param {discord.Message} message
-   * @param {discord.Guild} guild
-   * @returns
+   * @param {String} threadName the name for the thread
+   * @param {discord.Channel} channel the channel example message.channel
+   * @param {discord.Message} message the message related for the thread
+   * @param {discord.Guild} guild the guild example message.guild
    */
   async threadCreateAsync(threadName, channel, message, guild) {
     if (!guild) return;
@@ -89,7 +87,7 @@ class Client {
   }
   /**
    *
-   * @returns
+   * @returns {data}
    */
   clientpingAync() {
     const p3 = new Promise(async (resolve, reject) => {
@@ -110,8 +108,8 @@ class Client {
 
   /**
    *
-   * @param {('error'|'warn'|'info')} type
-   * @param {String} text
+   * @param {('error'|'warn'|'info')} type the type of log for it to log
+   * @param {String} text the message to log
    */
   executeconsole(type, text) {
     this.logs[type](text);
@@ -159,12 +157,12 @@ class Utils {
 
   /**
    *
-   * @param {Array} array
-   * @param {Number} itemsPerPage
-   * @param {Number} page
+   * @param {Array} array the array to page
+   * @param {Number} itemsPerPage the amount of items allowed per page
+   * @param {Number} page the page number to receive
    * @returns {data}
    */
-  pagesAsync(array, itemsPerPage, page = 1) {
+  pagesAsync(array, itemsPerPage = 10, page = 1) {
     const p3 = new Promise(async (resolve, reject) => {
       const maxPages = Math.ceil(array.length / itemsPerPage);
       if (page < 1 || page > maxPages) return reject("err: page error");
@@ -185,7 +183,7 @@ class Utils {
 
   /**
    * Sends a message to a channel
-   * @param {discord.TextChannel|discord.ThreadChannel|discord.Snowflake} channel The channel to send the message to
+   * @param {String} webhookurl The Webhook url
    * @param {String} context The content of the message
    * @param {discord.MessageEmbed} embed The embed to send (optionnal)
    */
@@ -220,7 +218,7 @@ class Utils {
   }
   /**
    * Checks versions of Discord.JS and the NodeJS version
-   * @returns
+   * @returns {data}
    */
   versioninfoAsync() {
     const p3 = new Promise(async (resolve, reject) => {
@@ -274,9 +272,9 @@ class Utils {
   }
   /**
    *
-   * @param {*} perm
-   * @param {discord.GuildMember} member
-   * @param {discord.ChannelManager} channel
+   * @param {discord.PermissionsBitField} perm the permission
+   * @param {discord.GuildMember} member the member example message.author
+   * @param {discord.ChannelManager} channel the channel example message.channel
    */
   async permCheckerAsync(perm, member, channel) {
     const p3 = new Promise(async (resolve, reject) => {
