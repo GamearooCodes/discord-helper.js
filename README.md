@@ -21,9 +21,61 @@ We understand JavaScript can be hard especially with discord.js. This package ha
 
 `npm i discord-helper.js` or `yarn add discord-helper.js`
 
-## Docs
+## Example
 
-https://dhjsdocs.gamearoo.dev
+```javascript
+// these are just examples please provide the actual info
+import * as discordHelper from "discord-helper.js"; // typescript
+
+const discordHelper = require("discord-helper.js"); // javascript
+
+new discordHelper.HelperClient(client).GlobalcommandRegisterAsync({
+  name: "hello",
+  description: "command",
+  options: [],
+  type: "Optinal",
+  permission: "Administrator",
+});
+
+new discordHelper.HelperClient(client)
+  .clientPing()
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((err) => {});
+
+new discordHelper.HelperClient(client).threadCreateAsync(
+  "name",
+  channel,
+  message,
+  guild
+);
+
+new discordHelper.HelperClient(client).channelsend(channel, "", embed);
+
+new discordHelper.HelperUtils()
+  .math(1, 2)
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((err) => {});
+
+new discordHelper.HelperUtils()
+  .pages(array, 1, 1)
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((err) => {});
+
+new discordHelper.HelperUtils()
+  .permCheckerAsync(perm, member, channel)
+  .then((data) => {
+    console.log(data);
+  })
+  .catch((err) => {});
+
+new discordHelper.HelperUtils().discordsendwebhook(webhookURL, "", embed);
+```
 
 ## Support
 
