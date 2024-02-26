@@ -14,7 +14,7 @@
     "outDir": "dist/esm",
     "sourceMap": true,
     "strict": true,
-    "target": "es6"
+    "target": "es2020" // Update target to ES2020
   },
   "include": ["typescript/**/*.ts", "index.ts"]
 }
