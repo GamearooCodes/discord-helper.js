@@ -27,9 +27,19 @@ We understand JavaScript can be hard especially with discord.js. This package ha
 // these are just examples please provide the actual info
 import * as discordHelper from "discord-helper.js"; // typescript
 
+let guildid = "Guild Id Here";
+
 const discordHelper = require("discord-helper.js"); // javascript
 
 new discordHelper.HelperClient(client).GlobalcommandRegisterAsync({
+  name: "hello",
+  description: "command",
+  options: [],
+  type: "Optinal",
+  permission: "Administrator",
+});
+
+new discordHelper.HelperClient(client).GuildcommandRegisterAsync(guildid, {
   name: "hello",
   description: "command",
   options: [],

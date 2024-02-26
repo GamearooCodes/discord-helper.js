@@ -47,11 +47,46 @@ const logger = new Logger({
 });
 
 export class HelperClient {
+    
     private client;
     constructor(client: any) {
         this.client = client;
 
     }
+    async GuildcommandRegisterAsync(GuildId: string, _options: {name: string, options?: [], description: string, permission?: any, type?: any}) {
+      let name = _options.name;
+  let options = _options.options;
+  let description = _options.description;
+  let permission = _options.permission;
+  let guild = await this.client.guilds.fetch(GuildId);
+  if(!guild) return logger.error(`${GuildId} is not found`, "discord-helper.js")
+  let commands = guild?.commands;
+  if(!commands) return logger.error(`An Error has accured while fething the guilds commands`, "discord-helper.js");
+      
+  if (_options.type) {
+      commands?.create({
+        name,
+        description,
+        options,
+        type: _options.type, // Corrected variable name for 'type'
+        default_member_permissions: permission,
+      });
+
+      return logger.info(`Registered ${name} to the ${guild.name}'s commands`, "discord-helper.js");
+
+  }
+  commands?.create({
+      name,
+      description,
+      options,
+      default_member_permissions: permission,
+    });
+  return logger.info(`Registered ${name} to the bot's commands`, "discord-helper.js");
+}
+
+
+
+
     async GlobalcommandRegisterAsync(_options: {name: string, options?: [], description: string, permission?: any, type?: any}) {
         let name = _options.name;
     let options = _options.options;
@@ -118,9 +153,9 @@ async threadCreateAsync(threadName: string, channel: discord.Channel, message: d
     });
    
   }
-  channelsend(channel: any, context: string, embed?: any) {
+  async channelsend(channel: any, context: string, embed?: any) {
     const channelsend =
-      this.client.channels.cache.get(channel.id || channel) || null;
+      await this.client.channels.cache.get(channel.id || channel) || null;
 
     if (!channelsend)
       return logger.error(
